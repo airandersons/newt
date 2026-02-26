@@ -128,7 +128,7 @@ h2.light { color: white; }
 /* hero */
 .hero {
     min-height: 90vh;
-    background: url('https://via.placeholder.com/1920x1080/1e2b4a/d4af37?text=Kampala+City+Silhouette') center/cover fixed;
+    background: url('images/church.jpg') center/cover fixed;
     position: relative;
     display: flex;
     align-items: center;
