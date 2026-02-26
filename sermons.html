@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sermons | New Testament Evangelical Church</title>
+    <!-- Google Fonts & Font Awesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* page-specific enhancements — keeping external css primary, only additions */
+        .page-banner {
+            min-height: 40vh;
+            background: url('https://via.placeholder.com/1600x600/1e2b4a/d4af37?text=Powerful+Messages+from+the+Word') center/cover fixed;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+        .sermons-banner .banner-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(26,43,76,0.95), rgba(74,44,95,0.9));
+        }
+        .banner-content {
+            position: relative;
+            z-index: 2;
+        }
+        .banner-content h1 {
+            font-size: 4rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* filter buttons */
+        .filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin: 3rem 0 2rem;
+        }
+        .filter-btn {
+            background: transparent;
+            border: 2px solid var(--deep-blue);
+            color: var(--deep-blue);
+            padding: 0.7rem 2rem;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--deep-blue);
+            color: white;
+        }
+
+        /* sermon cards grid */
+        .sermons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .sermon-card {
+            background: white;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            opacity: 1;
+            transform: scale(1);
+            transition: all 0.3s ease;
+        }
+        .sermon-card.hide {
+            display: none; /* used for filtering */
+        }
+        .sermon-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 35px rgba(74,44,95,0.2);
+        }
+        .sermon-thumb {
+            position: relative;
+        }
+        .sermon-thumb img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+        }
+        .play-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .sermon-card:hover .play-overlay {
+            opacity: 1;
+        }
+        .play-overlay i {
+            font-size: 3.5rem;
+            color: var(--gold);
+            text-shadow: 0 2px 10px black;
+        }
+        .sermon-info {
+            padding: 1.5rem;
+        }
+        .sermon-info h3 {
+            color: var(--royal-purple);
+            margin-bottom: 0.5rem;
+        }
+        .sermon-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #6c757d;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        .sermon-meta i {
+            color: var(--gold);
+            margin-right: 0.3rem;
+        }
+        .category-tag {
+            display: inline-block;
+            background: var(--gold-light);
+            color: var(--deep-blue);
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        /* live section */
+        .live-stream-section {
+            background: linear-gradient(145deg, #0f172a, #1a2b4c);
+            color: white;
+        }
+        .youtube-embed {
+            max-width: 900px;
+            margin: 0 auto 2rem;
+            aspect-ratio: 16/9;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 20px 30px rgba(0,0,0,0.5);
+        }
+        .youtube-embed iframe {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* youtube subscribe section */
+        .subscribe-yt {
+            text-align: center;
+            background: white;
+            padding: 3rem;
+            border-radius: 50px;
+            box-shadow: var(--shadow);
+        }
+        .btn-youtube {
+            background: #ff0000;
+            color: white;
+        }
+        .btn-youtube:hover {
+            background: #cc0000;
+        }
+
+        @media (max-width: 768px) {
+            .banner-content h1 { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sticky Navigation (same as index) -->
+    <header class="site-header">
+        <div class="container nav-container">
+            <div class="logo">
+                <a href="/"><span class="logo-icon"><i class="fas fa-cross"></i></span> NTEC</a>
+            </div>
+            <button class="hamburger" id="hamburger" aria-label="Menu"><i class="fas fa-bars"></i></button>
+            <nav class="main-nav" id="mainNav">
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/about.html">About</a></li>
+                    <li><a href="/ministries.html">Ministries</a></li>
+                    <li><a href="/sermons.html" class="active">Sermons</a></li>
+                    <li><a href="/bible-school.html">Bible School</a></li>
+                    <li><a href="/contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- 1. Header Banner -->
+        <section class="page-banner sermons-banner">
+            <div class="banner-overlay"></div>
+            <div class="container banner-content">
+                <h1 class="slide-in">Sermons & Messages</h1>
+                <p class="slide-in delay-1">Equipping the saints, transforming the city</p>
+            </div>
+        </section>
+
+        <!-- 2. Live Service Section (YouTube embed) -->
+        <section class="live-stream-section section-padding">
+            <div class="container">
+                <h2 class="section-title light">Join us live · Sundays 9am & 11am</h2>
+                <div class="youtube-embed fade-in">
+                    <!-- YouTube livestream placeholder (embed with live stream placeholder) -->
+                    <iframe src="https://www.youtube.com/embed/?listType=playlist&list=PLSzuwR5Jv_9kz5oKMnIpD0pPkUjmk9Mmw" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <p class="light-text fade-in delay-1" style="text-align:center; color:#ccc;">Can't join live? Watch past services below.</p>
+            </div>
+        </section>
+
+        <!-- Filtering + Recent Sermons Grid -->
+        <section class="section-padding">
+            <div class="container">
+                <h2 class="section-title">Recent Sermons</h2>
+                
+                <!-- 4. Filter Buttons -->
+                <div class="filter-buttons fade-in">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="sunday">Sunday Service</button>
+                    <button class="filter-btn" data-filter="youth">Youth Service</button>
+                    <button class="filter-btn" data-filter="conference">Special Conferences</button>
+                </div>
+
+                <!-- 3. Sermons Grid (items with categories) -->
+                <div class="sermons-grid" id="sermonsGrid">
+                    <!-- Sunday sermons -->
+                    <div class="sermon-card fade-in" data-category="sunday">
+                        <div class="sermon-thumb">
+                            <img src="https://via.placeholder.com/400x220/2c3e50/d4af37?text=The+Power+of+Prayer" alt="Sermon thumbnail">
+                            <div class="play-overlay"><i class="fas fa-play-circle"></i></div>
+                        </div>
+                        <div class="sermon-info">
+                            <h3>The Power of Prayer</h3>
+                            <div class="sermon-meta"><span><i class="fas fa-calendar"></i> Mar 9, 2025</span> <span><i class="fas fa-user"></i> Bishop Mutebi</span></div>
+                            <span class="category-tag">Sunday Service</span>
+                        </div>
+                    </div>
+
+                    <div class="sermon-card fade-in delay-1" data-category="sunday">
+                        <div class="sermon-thumb">
+                            <img src="https://via.placeholder.com/400x220/2c3e50/f0d47e?text=Faith+in+Action" alt="Sermon thumbnail">
+                            <div class="play-overlay"><i class="fas fa-play-circle"></i></div>
+                        </div>
+                        <div class="sermon-info">
+                            <h3>Faith in Action</h3>
+                            <div class="sermon-meta"><span><i class="fas fa-calendar"></i> Mar 2, 2025</span> <span><i class="fas fa-user"></i> Pastor Sarah</span></div>
+                            <span class="category-tag">Sunday Service</span>
+                        </div>
+                    </div>
+
+                    <div class="sermon-card fade-in" data-category="sunday">
+                        <div class="sermon-thumb">
+                            <img src="https://via.placeholder.com/400x220/2c3e50/ffffff?text=Walking+in+Love" alt="Sermon thumbnail">
+                            <div class="play-overlay"><i class="fas fa-play-circle"></i></div>
+                        </div>
+                        <div class="sermon-info">
+                            <h3>Walking in Love</h3>
+                            <div class="sermon-meta"><span><i class="fas fa-calendar"></i> Feb 23, 2025</span> <span><i class="fas fa-user"></i> Bishop Mutebi</span></div>
+                            <span class="category-tag">Sunday Service</span>
+                        </div>
+                    </div>
+
+                    <!-- Youth services -->
+                    <div class="sermon-card fade-in delay-2" data-category="youth">
+                        <div class="sermon-thumb">
+                            <img src="https://via.placeholder.com/400x220/138d75/ffffff?text=Purpose+%26+Vision" alt="Youth">
+                            <div class="play-overlay"><i class="fas fa-play-circle"></i></div>
+                        </div>
+                        <div class="sermon-info">
+                            <h3>Purpose & Vision</h3>
+                            <div class="sermon-meta"><span><i class="fas fa-calendar"></i> Feb 15, 2025</span> <span><i class="fas fa-user"></i> Pastor Mark</span></div>
+                            <span class="category-tag">Youth Service</span>
+                        </div>
+                    </div>
+
+                    <div class="sermon-card fade-in" data-category="youth">
+                        <div class="sermon-thumb">
+                            <img src="https://via.placeholder.com/400x220/138d75/d4af37?text=Stand+Strong" alt="Youth">
+                            <div class="play-overlay"><i class="fas fa-play-circle"></i></div>
+                        </div>
+                        <div class="sermon-info">
+                            <h3>Stand Strong</h3>
+                            <div class="sermon-meta"><span><i class="fas fa-calendar"></i> Feb 8, 2025</span> <span><i class="fas fa-user"></i> Pastor Linda</span></div>
+                            <span class="category-tag">Youth Service</span>
+                        </div>
+                    </div>
+
+                    <!-- Special Conferences -->
+                    <div class="sermon-card fade-in delay-1" data-category="conference">
+                        <div class="sermon-thumb">
+                            <img src="https://via.placeholder.com/400x220/4a235a/d4af37?text=Fire+Conference+2025" alt="Conference">
+                            <div class="play-overlay"><i class="fas fa-play-circle"></i></div>
+                        </div>
+                        <div class="sermon-info">
+                            <h3>Fire Conference 2025</h3>
+                            <div class="sermon-meta"><span><i class="fas fa-calendar"></i> Jan 18-20</span> <span><i class="fas fa-user"></i> Various</span></div>
+                            <span class="category-tag">Special Conferences</span>
+                        </div>
+                    </div>
+
+                    <div class="sermon-card fade-in delay-2" data-category="conference">
+                        <div class="sermon-thumb">
+                            <img src="https://via.placeholder.com/400x220/4a235a/b8902c?text=Leadership+Summit" alt="Conference">
+                            <div class="play-overlay"><i class="fas fa-play-circle"></i></div>
+                        </div>
+                        <div class="sermon-info">
+                            <h3>Leadership Summit</h3>
+                            <div class="sermon-meta"><span><i class="fas fa-calendar"></i> Dec 2024</span> <span><i class="fas fa-user"></i> Bishop & Guests</span></div>
+                            <span class="category-tag">Special Conferences</span>
+                        </div>
+                    </div>
+
+                    <!-- additional card to fill out (sunday) -->
+                    <div class="sermon-card fade-in" data-category="sunday">
+                        <div class="sermon-thumb">
+                            <img src="https://via.placeholder.com/400x220/2c3e50/d4af37?text=Overcoming+Worry" alt="Sermon">
+                            <div class="play-overlay"><i class="fas fa-play-circle"></i></div>
+                        </div>
+                        <div class="sermon-info">
+                            <h3>Overcoming Worry</h3>
+                            <div class="sermon-meta"><span><i class="fas fa-calendar"></i> Feb 2, 2025</span> <span><i class="fas fa-user"></i> Bishop Mutebi</span></div>
+                            <span class="category-tag">Sunday Service</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Subscribe to YouTube section -->
+        <section class="section-padding bg-light">
+            <div class="container subscribe-yt fade-in">
+                <i class="fab fa-youtube" style="font-size: 4rem; color: #ff0000; margin-bottom: 1rem;"></i>
+                <h2>Never miss a message</h2>
+                <p>Subscribe to our YouTube channel for the latest sermons, live streams, and conference recordings.</p>
+                <a href="#" class="btn btn-youtube"><i class="fab fa-youtube"></i> Subscribe Now</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer (same as index) -->
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div class="footer-about">
+                <h3>New Testament Evangelical Church</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Kampala, Uganda</p>
+                <p><i class="fas fa-phone"></i> +256 700 123 456</p>
+                <p><i class="fas fa-envelope"></i> info@ntecKampala.org</p>
+            </div>
+            <div class="footer-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="/about.html">About</a></li>
+                    <li><a href="/ministries.html">Ministries</a></li>
+                    <li><a href="/sermons.html">Sermons</a></li>
+                    <li><a href="/bible-school.html">Bible School</a></li>
+                    <li><a href="/contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-social">
+                <h3>Connect</h3>
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 New Testament Evangelical Church. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="JS/main.js"></script>
+    <!-- Filtering JavaScript (enhancement, also can be placed in main.js but here for clarity) -->
+    <script>
+        (function() {
+            // Wait for DOM and any fade-ins etc, but filters can run immediately
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const sermonCards = document.querySelectorAll('.sermon-card');
+
+            if (filterButtons.length && sermonCards.length) {
+                filterButtons.forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        // remove active class from all buttons
+                        filterButtons.forEach(b => b.classList.remove('active'));
+                        this.classList.add('active');
+
+                        const filterValue = this.getAttribute('data-filter');
+
+                        sermonCards.forEach(card => {
+                            if (filterValue === 'all') {
+                                card.classList.remove('hide');
+                            } else {
+                                const category = card.getAttribute('data-category');
+                                if (category === filterValue) {
+                                    card.classList.remove('hide');
+                                } else {
+                                    card.classList.add('hide');
+                                }
+                            }
+                        });
+                    });
+                });
+            }
+        })();
+    </script>
+</body>
+</html>
