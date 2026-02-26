@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bible School | New Testament Evangelical Church</title>
+    <!-- Google Fonts & Font Awesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        /* page-specific refinements — keeping external css primary */
+        .page-banner {
+            min-height: 40vh;
+            background: url('https://via.placeholder.com/1600x600/1e2b4a/d4af37?text=Equipping+the+Saints+for+Ministry') center/cover fixed;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+        .bible-banner .banner-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(26,43,76,0.95), rgba(74,44,95,0.9));
+        }
+        .banner-content {
+            position: relative;
+            z-index: 2;
+        }
+        .banner-content h1 {
+            font-size: 4rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* bible school about */
+        .about-bible {
+            background: white;
+        }
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        .about-text .lead {
+            font-size: 1.3rem;
+            color: var(--deep-blue);
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+        }
+        .about-image img {
+            border-radius: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        /* programs cards with icons */
+        .programs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .program-card {
+            background: white;
+            padding: 2rem 1.5rem;
+            border-radius: 30px;
+            text-align: center;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(212,175,55,0.2);
+        }
+        .program-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 40px rgba(74,44,95,0.15);
+        }
+        .program-icon {
+            width: 90px;
+            height: 90px;
+            background: var(--gold);
+            color: var(--deep-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.8rem;
+            margin: 0 auto 1.5rem;
+            transition: 0.3s;
+        }
+        .program-card:hover .program-icon {
+            background: var(--deep-blue);
+            color: var(--gold);
+        }
+        .program-card h3 {
+            color: var(--royal-purple);
+            margin-bottom: 1rem;
+        }
+        .program-card p {
+            color: #4a4a4a;
+            font-size: 0.95rem;
+        }
+
+        /* why enroll */
+        .why-enroll {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        }
+        .enroll-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+        }
+        .enroll-item {
+            background: white;
+            padding: 2rem;
+            border-radius: 30px;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            transition: 0.2s;
+        }
+        .enroll-item:hover {
+            background: var(--deep-blue);
+            color: white;
+        }
+        .enroll-item:hover p { color: rgba(255,255,255,0.9); }
+        .enroll-item i {
+            font-size: 2.5rem;
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+        .enroll-item h3 {
+            color: var(--royal-purple);
+            margin-bottom: 0.8rem;
+        }
+        .enroll-item:hover h3 { color: white; }
+        .enroll-item p { color: #555; }
+
+        /* CTA section */
+        .enroll-cta {
+            background: var(--deep-blue);
+            color: white;
+            text-align: center;
+        }
+        .cta-content h2 {
+            color: white;
+            font-size: 2.8rem;
+        }
+        .btn-large {
+            padding: 1.2rem 3.5rem;
+            font-size: 1.2rem;
+        }
+
+        /* testimonial placeholders */
+        .testimonials {
+            background: white;
+        }
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .testimonial-card {
+            background: #f0f2f5;
+            padding: 2rem;
+            border-radius: 30px;
+            text-align: center;
+            position: relative;
+            border-bottom: 4px solid var(--gold);
+        }
+        .testimonial-card i.fa-quote-left {
+            color: var(--gold);
+            font-size: 2rem;
+            opacity: 0.4;
+            margin-bottom: 0.5rem;
+        }
+        .testimonial-card p {
+            font-style: italic;
+            margin: 1rem 0;
+        }
+        .testimonial-card h4 {
+            color: var(--deep-blue);
+            margin-top: 1rem;
+        }
+        .testimonial-card .role {
+            color: var(--royal-purple);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        @media (max-width: 992px) {
+            .about-grid, .enroll-grid, .testimonial-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+            .banner-content h1 { font-size: 2.5rem; }
+            .cta-content h2 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sticky Navigation (same as index) -->
+    <header class="site-header">
+        <div class="container nav-container">
+            <div class="logo">
+                <a href="/"><span class="logo-icon"><i class="fas fa-cross"></i></span> NTEC</a>
+            </div>
+            <button class="hamburger" id="hamburger" aria-label="Menu"><i class="fas fa-bars"></i></button>
+            <nav class="main-nav" id="mainNav">
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/about.html">About</a></li>
+                    <li><a href="/ministries.html">Ministries</a></li>
+                    <li><a href="/sermons.html">Sermons</a></li>
+                    <li><a href="/bible-school.html" class="active">Bible School</a></li>
+                    <li><a href="/contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- 1. Header Banner -->
+        <section class="page-banner bible-banner">
+            <div class="banner-overlay"></div>
+            <div class="container banner-content">
+                <h1 class="slide-in">NTEC Bible School</h1>
+                <p class="slide-in delay-1">Rooted in truth, trained for service</p>
+            </div>
+        </section>
+
+        <!-- 2. About the Bible School -->
+        <section class="about-bible section-padding">
+            <div class="container about-grid">
+                <div class="about-text fade-in">
+                    <h2>Equipping labourers for the harvest</h2>
+                    <p class="lead">For over 15 years, NTEC Bible School has been training men and women for ministry — lay leaders, pastors, missionaries, and every believer who desires to know God deeply.</p>
+                    <p>Our certificate and diploma programs combine rigorous biblical study with practical ministry exposure. Classes are held in the evenings and weekends to accommodate working professionals. You don’t need a theological background — just a hunger for the Word.</p>
+                    <p><strong>Location:</strong> NTEC Main Campus, Kampala<br><strong>Next term starts:</strong> September 2025</p>
+                    <a href="#enroll" class="btn-link">Apply now <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="about-image fade-in delay-1">
+                    <img src="https://via.placeholder.com/600x500/4a235a/d4af37?text=Bible+School+Class" alt="Bible school in session">
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Programs Offered (cards with icons) -->
+        <section class="section-padding bg-light">
+            <div class="container">
+                <h2 class="section-title">Programs offered</h2>
+                <div class="programs-grid">
+                    <div class="program-card fade-in">
+                        <div class="program-icon"><i class="fas fa-scroll"></i></div>
+                        <h3>Certificate in Biblical Studies</h3>
+                        <p>One-year foundation course covering Old & New Testament, Hermeneutics, and Spiritual Formation. Perfect for every believer.</p>
+                    </div>
+                    <div class="program-card fade-in delay-1">
+                        <div class="program-icon"><i class="fas fa-graduation-cap"></i></div>
+                        <h3>Diploma in Theology</h3>
+                        <p>Two-year in-depth program: systematic theology, church history, homiletics, and pastoral care. Ideal for ministry leaders.</p>
+                    </div>
+                    <div class="program-card fade-in delay-2">
+                        <div class="program-icon"><i class="fas fa-hands-praying"></i></div>
+                        <h3>Lay Leadership Track</h3>
+                        <p>Short courses for cell leaders, ushers, and ministry volunteers: discipleship, counseling basics, and servant leadership.</p>
+                    </div>
+                    <div class="program-card fade-in">
+                        <div class="program-icon"><i class="fas fa-globe"></i></div>
+                        <h3>Mission & Evangelism</h3>
+                        <p>Practical training for outreach, cross-cultural ministry, and church planting. Includes local field assignments.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Why Enroll Section -->
+        <section class="why-enroll section-padding">
+            <div class="container">
+                <h2 class="section-title">Why enroll at NTEC Bible School?</h2>
+                <div class="enroll-grid">
+                    <div class="enroll-item fade-in">
+                        <i class="fas fa-user-check"></i>
+                        <h3>Experienced faculty</h3>
+                        <p>Learn from pastors, theologians, and ministry practitioners with decades of experience.</p>
+                    </div>
+                    <div class="enroll-item fade-in delay-1">
+                        <i class="fas fa-clock"></i>
+                        <h3>Flexible schedules</h3>
+                        <p>Evening and weekend classes so you can study while working or serving.</p>
+                    </div>
+                    <div class="enroll-item fade-in delay-2">
+                        <i class="fas fa-hand-holding-heart"></i>
+                        <h3>Practical ministry</h3>
+                        <p>Internships within NTEC ministries: preach, lead, counsel — real hands-on training.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Enrollment Call-to-Action -->
+        <section id="enroll" class="enroll-cta section-padding">
+            <div class="container cta-content">
+                <h2 class="fade-in">Ready to go deeper?</h2>
+                <p class="fade-in delay-1" style="font-size: 1.3rem; max-width: 700px; margin: 1.5rem auto;">Applications for the September term are now open. Classes fill quickly.</p>
+                <a href="/contact.html" class="btn btn-primary btn-large fade-in delay-2"><i class="fas fa-pen"></i> Request application form</a>
+                <p class="fade-in delay-3" style="margin-top: 2rem;">or call <strong>+256 700 123 456</strong> for more information.</p>
+            </div>
+        </section>
+
+        <!-- 6. Testimonial placeholders -->
+        <section class="testimonials section-padding">
+            <div class="container">
+                <h2 class="section-title">What our graduates say</h2>
+                <div class="testimonial-grid">
+                    <div class="testimonial-card fade-in">
+                        <i class="fas fa-quote-left"></i>
+                        <p>"The Bible School didn't just give me knowledge — it gave me a foundation for life. I now lead a cell group and teach with confidence."</p>
+                        <h4>David Okello</h4>
+                        <span class="role">Graduate, Diploma in Theology</span>
+                    </div>
+                    <div class="testimonial-card fade-in delay-1">
+                        <i class="fas fa-quote-left"></i>
+                        <p>"As a working mom, the evening classes were perfect. The lecturers are so approachable, and I grew closer to God than ever."</p>
+                        <h4>Esther Namugenyi</h4>
+                        <span class="role">Certificate in Biblical Studies</span>
+                    </div>
+                    <div class="testimonial-card fade-in delay-2">
+                        <i class="fas fa-quote-left"></i>
+                        <p>"The practical evangelism track pushed me out of my comfort zone. Today I help lead our prison ministry — all because of what I learned."</p>
+                        <h4>James Muwonge</h4>
+                        <span class="role">Mission & Evangelism graduate</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer (same as index) -->
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div class="footer-about">
+                <h3>New Testament Evangelical Church</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Kampala, Uganda</p>
+                <p><i class="fas fa-phone"></i> +256 700 123 456</p>
+                <p><i class="fas fa-envelope"></i> info@ntecKampala.org</p>
+            </div>
+            <div class="footer-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="/about.html">About</a></li>
+                    <li><a href="/ministries.html">Ministries</a></li>
+                    <li><a href="/sermons.html">Sermons</a></li>
+                    <li><a href="/bible-school.html">Bible School</a></li>
+                    <li><a href="/contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-social">
+                <h3>Connect</h3>
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 New Testament Evangelical Church. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>
