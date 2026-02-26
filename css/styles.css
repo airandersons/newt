@@ -425,3 +425,191 @@ img {
     .stats-grid { grid-template-columns: 1fr; }
     .hero h1 { font-size: 2.5rem; }
 }
+
+
+
+
+
+    /* Additional styles for contact.html – add to /css/styles.css */
+
+/* Page Banner (unique for interior pages) */
+.page-banner {
+    min-height: 40vh;
+    background: url('https://via.placeholder.com/1600x600/1e2b4a/d4af37?text=Kampala+City+Church') center/cover fixed;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+}
+.banner-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(26,43,76,0.85), rgba(74,44,95,0.8));
+}
+.banner-content {
+    position: relative;
+    z-index: 2;
+}
+.banner-content h1 {
+    font-size: 3.5rem;
+    margin-bottom: 0.5rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+.banner-content p {
+    font-size: 1.3rem;
+    font-weight: 300;
+}
+
+/* Contact Cards Grid */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 2rem;
+    margin-top: 1rem;
+}
+.contact-card {
+    background: white;
+    padding: 2.5rem 2rem;
+    border-radius: 30px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.contact-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 25px 40px rgba(74,44,95,0.2);
+}
+.card-icon {
+    width: 80px;
+    height: 80px;
+    background: var(--warm-gradient);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    color: var(--gold);
+    font-size: 2.2rem;
+    border: 3px solid var(--gold-light);
+}
+.contact-card h3 {
+    color: var(--deep-blue);
+    margin-bottom: 1rem;
+    font-size: 1.6rem;
+}
+.contact-card p {
+    color: #333;
+    line-height: 1.8;
+}
+
+/* Service Times */
+.times-grid {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 30px;
+    padding: 2.5rem;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+}
+.time-item {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    padding: 1.2rem 0;
+    border-bottom: 1px dashed #ddd;
+}
+.time-item:last-child {
+    border-bottom: none;
+}
+.day {
+    font-weight: 700;
+    color: var(--royal-purple);
+    width: 130px;
+    font-size: 1.2rem;
+}
+.time {
+    color: var(--deep-blue);
+    flex: 1;
+    margin-left: 1rem;
+}
+@media (max-width: 600px) {
+    .time-item { flex-direction: column; }
+    .day { width: auto; margin-bottom: 0.3rem; }
+    .time { margin-left: 0; }
+}
+
+/* Contact Form */
+.form-container {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 30px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+}
+.form-container h2 {
+    color: var(--deep-blue);
+    margin-bottom: 0.5rem;
+}
+.form-group {
+    margin-bottom: 1.5rem;
+}
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 1rem 1.2rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 60px;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    transition: border 0.3s, box-shadow 0.3s;
+}
+.form-group textarea {
+    border-radius: 30px;
+    resize: vertical;
+}
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.15);
+}
+.form-container button {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.2rem;
+    border: none;
+    cursor: pointer;
+}
+
+/* Map placeholder */
+.map-placeholder h2 {
+    color: var(--deep-blue);
+    margin-bottom: 1.5rem;
+}
+.map-frame {
+    width: 100%;
+    height: 350px;
+    border-radius: 30px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    border: 3px solid white;
+}
+.map-frame iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+.map-note {
+    margin-top: 1rem;
+    font-style: italic;
+    color: var(--deep-blue);
+}
+
+/* Responsive touch */
+@media (max-width: 768px) {
+    .banner-content h1 { font-size: 2.5rem; }
+    .cards-grid { grid-template-columns: 1fr; }
+    .form-container, .map-frame { margin-bottom: 2rem; }
+    .grid-2 { gap: 2rem; }
+    }
