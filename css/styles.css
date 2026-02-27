@@ -137,7 +137,7 @@ h2.light { color: white; }
 .hero-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(45deg, rgba(26,43,76,0.9), rgba(74,44,95,0.8));
+    background: linear-gradient(45deg, rgba(26,43,76,0.2), rgba(74,44,95,0.2));
 }
 .hero-content {
     position: relative;
