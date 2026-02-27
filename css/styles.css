@@ -89,8 +89,9 @@ h2.light { color: white; }
     align-items: center;
     gap: 0.5rem;
 }
-.logo-icon {
-    color: var(--gold);
+.logo a img {
+    height: 2rem;
+    max-height: 40px;
 }
 .main-nav ul {
     display: flex;
